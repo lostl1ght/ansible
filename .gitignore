@@ -1,0 +1,4 @@
+secrets.enc
+debug.yml
+*.zwc
+.venv/
