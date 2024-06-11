@@ -4,3 +4,6 @@
 [submodule "roles/shell/files"]
 	path = roles/shell/files
 	url = git@github.com:lostl1ght/shell.git
+[submodule "roles/tmux/files/tmux"]
+	path = roles/tmux/files/tmux
+	url = git@github.com:lostl1ght/tmux.git
