@@ -1,0 +1,4 @@
+remote:
+  hosts:
+    <name>:
+      ansible_host: <address>

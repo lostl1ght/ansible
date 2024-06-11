@@ -1,0 +1,14 @@
+#!/bin/bash
+
+case "$1" in
+    all) ;;
+    *)
+        echo "ERROR: playbook '$1' not found"
+        echo 'Usage: run <PLAYBOOK>'
+        echo 'Playbooks:'
+        echo '  all  All configuration'
+        exit 1
+        ;;
+esac
+
+ansible-playbook -i "inventories/local" -i "inventories/remote" "$1.yml" -e "@secrets.yml"

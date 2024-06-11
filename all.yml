@@ -1,0 +1,7 @@
+- hosts:
+    - local
+    - remote
+  roles:
+    - role: shell
+    - role: tmux
+    - role: nvim
