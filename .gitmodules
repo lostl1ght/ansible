@@ -1,0 +1,3 @@
+[submodule "roles/nvim/files/nvim"]
+	path = roles/nvim/files/nvim
+	url = git@github.com:lostl1ght/nvim.git
