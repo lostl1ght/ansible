@@ -1,0 +1,15 @@
+- name: sync config (remote)
+  ansible.posix.synchronize:
+    src: nvim
+    dest: ~/.config
+    delete: true
+    rsync_opts:
+      - "--exclude=.git"
+  when: not ansible_connection == "local"
+
+- name: sync config (local)
+  ansible.builtin.file:
+    src: '{{ playbook_dir }}/roles/nvim/files/nvim'
+    path: ~/.config/nvim
+    state: link
+  when: ansible_connection == "local"
