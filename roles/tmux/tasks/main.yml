@@ -1,0 +1,66 @@
+- name: stat tmux
+  ansible.builtin.stat:
+    path: /usr/local/bin/tmux
+  register: tmux_stat
+
+- name: tmux version
+  ansible.builtin.uri:
+    url: https://api.github.com/repos/tmux/tmux/releases/latest
+    # headers:
+    #   Authorization: '{{ token }}'
+  register: repo
+  when: not tmux_stat.stat.exists
+
+- name: get tmux
+  ansible.builtin.unarchive:
+    src: https://github.com/tmux/tmux/releases/latest/download/tmux-{{ repo.json.tag_name }}.tar.gz
+    dest: /tmp
+    remote_src: true
+  when: not tmux_stat.stat.exists
+
+- name: install libevent & ncurses
+  become: true
+  ansible.builtin.apt:
+    pkg:
+      - libevent-dev
+      - libncurses-dev
+    state: present
+  when: ( not tmux_stat.stat.exists ) and ( ansible_os_family == "Debian" )
+
+- name: configure tmux
+  ansible.builtin.shell: cd /tmp/tmux-{{ repo.json.tag_name }} && ./configure
+  when: not tmux_stat.stat.exists
+
+- name: build tmux
+  ansible.builtin.shell: make -C /tmp/tmux-{{ repo.json.tag_name }} -j$(nproc)
+  when: not tmux_stat.stat.exists
+
+- name: install tmux
+  become: true
+  ansible.builtin.shell: make  -C /tmp/tmux-{{ repo.json.tag_name }} install
+  when: not tmux_stat.stat.exists
+
+- name: clean tmux
+  ansible.builtin.shell: rm -rf /tmp/tmux-{{ repo.json.tag_name }}
+  when: not tmux_stat.stat.exists
+
+- name: ensure ~/.config exists
+  ansible.builtin.file:
+    path: ~/.config
+    state: directory
+
+- name: sync tmux config (remote)
+  ansible.posix.synchronize:
+    src: tmux
+    dest: ~/.config
+    delete: true
+    rsync_opts:
+      - "--exclude=.git"
+  when: not ansible_connection == "local"
+
+- name: link tmux config (local)
+  ansible.builtin.file:
+    src: '{{ playbook_dir }}/roles/tmux/files/tmux'
+    path: ~/.config/tmux
+    state: link
+  when: ansible_connection == "local"
