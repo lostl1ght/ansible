@@ -2,4 +2,4 @@ secrets.yml
 debug.yml
 *.zwc
 .venv/
-inventories/remote/hosts.yml
+remote.yml
