@@ -1,0 +1,6 @@
+ansible_connection: ssh
+ansible_ssh_timeout: 3
+ansible_ssh_port: 22
+ansible_ssh_private_key_file: '{{ remote_identity }}'
+ansible_user: '{{ remote_username }}'
+ansible_become_password: '{{ remote_password }}'
