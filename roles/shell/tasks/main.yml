@@ -298,3 +298,22 @@
     mode: '0755'
     owner: root
     group: root
+
+- name: fd version
+  ansible.builtin.uri:
+    url: https://api.github.com/repos/sharkdp/fd/releases/latest
+  register: repo
+
+- name: get fd
+  become: true
+  ansible.builtin.unarchive:
+    src: https://github.com/sharkdp/fd/releases/latest/download/fd-{{ repo.json.tag_name }}-x86_64-unknown-linux-musl.tar.gz
+    dest: /usr/local/bin
+    creates: /usr/local/bin/fd
+    extra_opts:
+      - --strip-components=1
+      - fd-{{ repo.json.tag_name }}-x86_64-unknown-linux-musl/fd
+    remote_src: true
+    mode: '0755'
+    owner: root
+    group: root
