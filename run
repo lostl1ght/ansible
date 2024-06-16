@@ -3,7 +3,11 @@
 case "$1" in
     all) ;;
     *)
-        echo "ERROR: playbook '$1' not found"
+        if [[ -z "$1" ]]; then
+            echo 'ERROR: no playbook chosen'
+        else
+            echo "ERROR: playbook '$1' not found"
+        fi
         echo 'Usage: run <PLAYBOOK>'
         echo 'Playbooks:'
         echo '  all  Configure everyting'
