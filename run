@@ -6,7 +6,7 @@ case "$1" in
         echo "ERROR: playbook '$1' not found"
         echo 'Usage: run <PLAYBOOK>'
         echo 'Playbooks:'
-        echo '  all  All configuration'
+        echo '  all  Configure everyting'
         exit 1
         ;;
 esac
