@@ -4,6 +4,7 @@ Description=x410 VSOCK
 [Service]
 Type=simple
 ExecStart=/usr/bin/socat -b65536 UNIX-LISTEN:/tmp/.X11-unix/X0,fork,mode=777 VSOCK-CONNECT:2:6000
+SuccessExitStatus=143
 
 [Install]
 WantedBy=default.target
