@@ -1,0 +1,22 @@
+- name: ensure ~/.config/systemd/user exists
+  ansible.builtin.file:
+    path: ~/.config/systemd/user
+    recurse: true
+    state: directory
+  when: ansible_connection == "local"
+
+- name: copy x410 VSOCK service
+  ansible.builtin.copy:
+    src: systemd/user/x410.service
+    dest: ~/.config/systemd/user/
+    force: true
+    backup: true
+  when: ansible_connection == "local" and ansible_facts.virtualization_type == "wsl"
+
+- name: start x410 VSOCK service
+  ansible.builtin.systemd:
+    enabled: true
+    name: x410
+    state: started
+    scope: user
+  when: ansible_connection == "local" and ansible_facts.virtualization_type == "wsl"

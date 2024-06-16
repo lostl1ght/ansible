@@ -5,3 +5,4 @@
     - role: shell
     - role: tmux
     - role: nvim
+    - role: linux
