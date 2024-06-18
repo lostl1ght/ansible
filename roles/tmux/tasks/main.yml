@@ -24,6 +24,9 @@
     pkg:
       - libevent-dev
       - libncurses-dev
+      - build-essential
+      - bison
+      - pkg-config
     state: present
   when: ( not tmux_stat.stat.exists ) and ( ansible_os_family == "Debian" )
 
