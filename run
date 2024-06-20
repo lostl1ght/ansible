@@ -1,7 +1,7 @@
 #!/bin/bash
 
 case "$1" in
-    all) ;;
+    all | neovim) ;;
     *)
         if [[ -z "$1" ]]; then
             echo 'ERROR: no playbook chosen'
@@ -15,4 +15,4 @@ case "$1" in
         ;;
 esac
 
-ansible-playbook -i "local.yml" -i "remote.yml" "$1.yml" -e "@secrets.yml"
+ansible-playbook -i "local.yml" -i "remote.yml" "$1-playbook.yml" -e "@secrets.yml"
