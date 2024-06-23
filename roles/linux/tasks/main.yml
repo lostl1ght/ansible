@@ -3,6 +3,7 @@
     path: ~/.config/systemd/user
     recurse: true
     state: directory
+  when: ansible_facts.virtualization_type == "wsl"
 
 - name: copy x410 VSOCK service
   ansible.builtin.copy:
