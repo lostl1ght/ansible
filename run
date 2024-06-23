@@ -15,4 +15,4 @@ case "$1" in
         ;;
 esac
 
-ansible-playbook -i "local.yml" -i "remote.yml" "$1-playbook.yml" -e "@secrets.yml"
+ansible-playbook "$1-playbook.yml" -i "local.yml" -i "remote.yml" -e "@secrets.yml"
