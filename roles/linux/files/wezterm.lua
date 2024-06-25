@@ -43,14 +43,14 @@ return {
   },
   font_size = 9.0,
   color_scheme = 'kanagawa',
-  force_reverse_video_cursor = true,
+  -- force_reverse_video_cursor = true,
   color_schemes = {
     ['kanagawa'] = {
       foreground = '#dcd7ba',
       background = '#1f1f28',
 
-      cursor_bg = '#c8c093',
-      cursor_fg = '#c8c093',
+      cursor_bg = '#c5c9c5',
+      cursor_fg = '#16161D',
       cursor_border = '#c8c093',
 
       selection_fg = '#c8c093',
