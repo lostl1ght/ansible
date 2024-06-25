@@ -2,3 +2,7 @@ remote:
   hosts:
     <name>:
       ansible_host: <address>
+      ansible_ssh_port: 22
+      ansible_user: <user>
+      ansible_become_password: <password>
+      ansible_ssh_private_key_file: <full path>
