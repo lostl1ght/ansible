@@ -99,19 +99,6 @@
     state: link
   when: ansible_connection == "local"
 
-- name: find zsh scripts
-  ansible.builtin.find:
-    paths: ~/.config/zimfw
-    recurse: true
-    patterns: '*.zsh'
-  register: zsh_scripts
-
-- name: compile zsh scripts
-  ansible.builtin.shell:
-    cmd: zcompile {{ item.path }}
-    executable: '/usr/bin/zsh'
-  loop: '{{ zsh_scripts.files }}'
-
 - name: get starship
   become: true
   ansible.builtin.unarchive:
