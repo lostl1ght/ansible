@@ -317,3 +317,17 @@
     mode: '0755'
     owner: root
     group: root
+
+- name: get btop
+  become: true
+  ansible.builtin.unarchive:
+    src: https://github.com/aristocratos/btop/releases/latest/download/btop-x86_64-linux-musl.tbz
+    dest: /usr/local/bin
+    creates: /usr/local/bin/btop
+    extra_opts:
+      - --strip-components=3
+      - ./btop/bin/btop
+    remote_src: true
+    mode: '0755'
+    owner: root
+    group: root
