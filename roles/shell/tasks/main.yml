@@ -50,21 +50,6 @@
     state: link
   when: ansible_connection == "local"
 
-- name: sync zimrc (remote)
-  ansible.builtin.copy:
-    src: .zimrc
-    dest: ~/.zimrc
-    force: true
-    backup: true
-  when: not ansible_connection == "local"
-
-- name: link zimrc (local)
-  ansible.builtin.file:
-    src: '{{ playbook_dir }}/roles/shell/files/.zimrc'
-    path: ~/.zimrc
-    state: link
-  when: ansible_connection == "local"
-
 - name: sync ignore (remote)
   ansible.builtin.copy:
     src: .ignore
