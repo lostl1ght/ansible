@@ -5,84 +5,18 @@
     state: present
   when: ansible_os_family == "Debian"
 
-- name: sync zshrc (remote)
-  ansible.builtin.copy:
-    src: .zshrc
-    dest: ~/.zshrc
-    force: true
-    backup: true
-  when: not ansible_connection == "local"
-
-- name: link zshrc (local)
-  ansible.builtin.file:
-    src: '{{ playbook_dir }}/roles/shell/files/.zshrc'
-    path: ~/.zshrc
-    state: link
+- name: sync config for LOCAL
+  import_tasks: local.yml
   when: ansible_connection == "local"
 
-- name: sync zshenv (remote)
-  ansible.builtin.copy:
-    src: .zshenv
-    dest: ~/.zshenv
-    force: true
-    backup: true
+- name: sync config for REMOTE
+  import_tasks: remote.yml
   when: not ansible_connection == "local"
-
-- name: link zshenv (local)
-  ansible.builtin.file:
-    src: '{{ playbook_dir }}/roles/shell/files/.zshenv'
-    path: ~/.zshenv
-    state: link
-  when: ansible_connection == "local"
-
-- name: sync zlogout (remote)
-  ansible.builtin.copy:
-    src: .zlogout
-    dest: ~/.zlogout
-    force: true
-    backup: true
-  when: not ansible_connection == "local"
-
-- name: link zlogout (local)
-  ansible.builtin.file:
-    src: '{{ playbook_dir }}/roles/shell/files/.zlogout'
-    path: ~/.zlogout
-    state: link
-  when: ansible_connection == "local"
-
-- name: sync ignore (remote)
-  ansible.builtin.copy:
-    src: .ignore
-    dest: ~/.ignore
-    force: true
-    backup: true
-  when: not ansible_connection == "local"
-
-- name: link ignore (local)
-  ansible.builtin.file:
-    src: '{{ playbook_dir }}/roles/shell/files/.ignore'
-    path: ~/.ignore
-    state: link
-  when: ansible_connection == "local"
 
 - name: ensure ~/.config exists
   ansible.builtin.file:
     path: ~/.config
     state: directory
-
-- name: sync zimfw (remote)
-  ansible.posix.synchronize:
-    src: zimfw
-    dest: ~/.config
-    delete: true
-  when: not ansible_connection == "local"
-
-- name: link zimfw (local)
-  ansible.builtin.file:
-    src: '{{ playbook_dir }}/roles/shell/files/zimfw'
-    path: ~/.config/zimfw
-    state: link
-  when: ansible_connection == "local"
 
 - name: get starship
   become: true
@@ -94,21 +28,6 @@
     mode: '0755'
     owner: root
     group: root
-
-- name: sync starship config (remote)
-  ansible.builtin.copy:
-    src: starship.toml
-    dest: ~/.config/
-    force: true
-    backup: true
-  when: not ansible_connection == "local"
-
-- name: link starship config (local)
-  ansible.builtin.file:
-    src: '{{ playbook_dir }}/roles/shell/files/starship.toml'
-    path: ~/.config/starship.toml
-    state: link
-  when: ansible_connection == "local"
 
 - name: get eza
   become: true
@@ -144,21 +63,6 @@
     mode: '0755'
     owner: root
     group: root
-
-- name: sync bat config (remote)
-  ansible.builtin.copy:
-    src: bat/config
-    dest: ~/.config/bat/
-    force: true
-    backup: true
-  when: not ansible_connection == "local"
-
-- name: link bat config (local)
-  ansible.builtin.file:
-    src: '{{ playbook_dir }}/roles/shell/files/bat'
-    path: ~/.config/bat
-    state: link
-  when: ansible_connection == "local"
 
 - name: zoxide version
   ansible.builtin.uri:
@@ -215,21 +119,6 @@
     mode: '0755'
     owner: root
     group: root
-
-- name: sync lazygit config (remote)
-  ansible.builtin.copy:
-    src: lazygit/config.yml
-    dest: ~/.config/lazygit/
-    force: true
-    backup: true
-  when: not ansible_connection == "local"
-
-- name: link lazygit config (local)
-  ansible.builtin.file:
-    src: '{{ playbook_dir }}/roles/shell/files/lazygit'
-    path: ~/.config/lazygit
-    state: link
-  when: ansible_connection == "local"
 
 - name: delta version
   ansible.builtin.uri:

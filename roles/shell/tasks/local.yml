@@ -1,0 +1,47 @@
+- name: link zshrc (local)
+  ansible.builtin.file:
+    src: '{{ playbook_dir }}/roles/shell/files/.zshrc'
+    path: ~/.zshrc
+    state: link
+
+- name: link zshenv (local)
+  ansible.builtin.file:
+    src: '{{ playbook_dir }}/roles/shell/files/.zshenv'
+    path: ~/.zshenv
+    state: link
+
+- name: link zlogout (local)
+  ansible.builtin.file:
+    src: '{{ playbook_dir }}/roles/shell/files/.zlogout'
+    path: ~/.zlogout
+    state: link
+
+- name: link ignore (local)
+  ansible.builtin.file:
+    src: '{{ playbook_dir }}/roles/shell/files/.ignore'
+    path: ~/.ignore
+    state: link
+
+- name: link zimfw (local)
+  ansible.builtin.file:
+    src: '{{ playbook_dir }}/roles/shell/files/zimfw'
+    path: ~/.config/zimfw
+    state: link
+
+- name: link starship config (local)
+  ansible.builtin.file:
+    src: '{{ playbook_dir }}/roles/shell/files/starship.toml'
+    path: ~/.config/starship.toml
+    state: link
+
+- name: link bat config (local)
+  ansible.builtin.file:
+    src: '{{ playbook_dir }}/roles/shell/files/bat'
+    path: ~/.config/bat
+    state: link
+
+- name: link lazygit config (local)
+  ansible.builtin.file:
+    src: '{{ playbook_dir }}/roles/shell/files/lazygit'
+    path: ~/.config/lazygit
+    state: link

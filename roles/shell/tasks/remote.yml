@@ -1,0 +1,54 @@
+- name: sync zshrc (remote)
+  ansible.builtin.copy:
+    src: .zshrc
+    dest: ~/.zshrc
+    force: true
+    backup: true
+
+- name: sync zshenv (remote)
+  ansible.builtin.copy:
+    src: .zshenv
+    dest: ~/.zshenv
+    force: true
+    backup: true
+
+- name: sync zlogout (remote)
+  ansible.builtin.copy:
+    src: .zlogout
+    dest: ~/.zlogout
+    force: true
+    backup: true
+
+- name: sync ignore (remote)
+  ansible.builtin.copy:
+    src: .ignore
+    dest: ~/.ignore
+    force: true
+    backup: true
+
+- name: sync zimfw (remote)
+  ansible.posix.synchronize:
+    src: zimfw
+    dest: ~/.config
+    delete: true
+
+- name: sync starship config (remote)
+  ansible.builtin.copy:
+    src: starship.toml
+    dest: ~/.config/
+    force: true
+    backup: true
+
+- name: sync bat config (remote)
+  ansible.builtin.copy:
+    src: bat/config
+    dest: ~/.config/bat/
+    force: true
+    backup: true
+
+- name: sync lazygit config (remote)
+  ansible.builtin.copy:
+    src: lazygit/config.yml
+    dest: ~/.config/lazygit/
+    force: true
+    backup: true
