@@ -59,11 +59,11 @@
     delete: true
     rsync_opts:
       - "--exclude=.git"
-  when: not ansible_connection == "local"
+  when: inventory_hostname in groups["remote"]
 
 - name: link tmux config (local)
   ansible.builtin.file:
     src: '{{ playbook_dir }}/roles/tmux/files/tmux'
     path: ~/.config/tmux
     state: link
-  when: ansible_connection == "local"
+  when: inventory_hostname in groups["local"]

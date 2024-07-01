@@ -5,11 +5,11 @@
     delete: true
     rsync_opts:
       - "--exclude=.git"
-  when: not ansible_connection == "local"
+  when: inventory_hostname in groups["remote"]
 
 - name: sync config (local)
   ansible.builtin.file:
     src: '{{ playbook_dir }}/roles/nvim/files/nvim'
     path: ~/.config/nvim
     state: link
-  when: ansible_connection == "local"
+  when: inventory_hostname in groups["local"]

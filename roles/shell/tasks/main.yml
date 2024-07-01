@@ -7,11 +7,11 @@
 
 - name: sync config for LOCAL
   import_tasks: local.yml
-  when: ansible_connection == "local"
+  when: inventory_hostname in groups["local"]
 
 - name: sync config for REMOTE
   import_tasks: remote.yml
-  when: not ansible_connection == "local"
+  when: inventory_hostname in groups["remote"]
 
 - name: ensure ~/.config exists
   ansible.builtin.file:
