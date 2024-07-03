@@ -16,4 +16,14 @@ case "$1" in
         ;;
 esac
 
+if [[ -z "$VIRTUAL_ENV" ]]; then
+    source '.venv/bin/activate' >/dev/null 2>/dev/null
+    if [[ $? -ne 0 ]]; then
+        echo "Install a virtual env into '.venv' folder"
+        exit 1
+    fi
+fi
+
 ansible-playbook "$1-playbook.yml" -i "local.yml" -i "remote.yml" -e "@secrets.yml"
+
+deactivate
