@@ -81,38 +81,6 @@ return {
       },
       indexed = { [16] = '#ffa066', [17] = '#ff5d62' },
     },
-    ['rose-pine'] = {
-      foreground = '#e0def4',
-      background = '#191724',
-
-      cursor_bg = '#524f67',
-      cursor_fg = '#e0def4',
-      cursor_border = '#524f67',
-
-      selection_bg = '#2a283e',
-      selection_fg = '#e0def4',
-
-      ansi = {
-        '#26233a',
-        '#eb6f92',
-        '#31748f',
-        '#f6c177',
-        '#9ccfd8',
-        '#c4a7e7',
-        '#ebbcba',
-        '#e0def4',
-      },
-      brights = {
-        '#6e6a86',
-        '#eb6f92',
-        '#31748f',
-        '#f6c177',
-        '#9ccfd8',
-        '#c4a7e7',
-        '#ebbcba',
-        '#e0def4',
-      },
-    },
   },
   disable_default_key_bindings = true,
   keys = {
