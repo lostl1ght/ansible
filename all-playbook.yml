@@ -4,6 +4,6 @@
   roles:
     - role: shell
     - role: tmux
-    - role: nvim
+    - role: neovim
     - role: linux
       when: inventory_hostname in groups["local"]

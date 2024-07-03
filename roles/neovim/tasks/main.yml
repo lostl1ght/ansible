@@ -9,7 +9,7 @@
 
 - name: sync config (local)
   ansible.builtin.file:
-    src: '{{ playbook_dir }}/roles/nvim/files/nvim'
+    src: '{{ playbook_dir }}/roles/neovim/files/nvim'
     path: ~/.config/nvim
     state: link
   when: inventory_hostname in groups["local"]

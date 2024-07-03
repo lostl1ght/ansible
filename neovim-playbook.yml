@@ -2,4 +2,4 @@
     - local
     - remote
   roles:
-    - role: nvim
+    - role: neovim
