@@ -10,7 +10,8 @@ case "$1" in
         fi
         echo 'Usage: run <PLAYBOOK>'
         echo 'Playbooks:'
-        echo '  all  Configure everyting'
+        echo '  all       Configure everyting'
+        echo '  neovim    Configure neovim'
         exit 1
         ;;
 esac
