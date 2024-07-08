@@ -13,6 +13,7 @@ end)
 
 return {
   term = 'wezterm',
+  window_padding = { left = 0, right = 0, top = 2, bottom = 0 },
   font = wezterm.font({
     family = 'JetBrainsMono Nerd Font Mono',
     harfbuzz_features = { 'calt=1', 'clig=1', 'liga=1' },
@@ -43,22 +44,17 @@ return {
   },
   font_size = 9.0,
   color_scheme = 'kanagawa',
-  -- force_reverse_video_cursor = true,
   color_schemes = {
     ['kanagawa'] = {
       foreground = '#dcd7ba',
       background = '#1f1f28',
-
-      cursor_bg = '#c5c9c5',
       cursor_fg = '#16161D',
+      cursor_bg = '#c5c9c5',
       cursor_border = '#c8c093',
-
       selection_fg = '#c8c093',
       selection_bg = '#2d4f67',
-
       scrollbar_thumb = '#16161d',
       split = '#16161d',
-
       ansi = {
         '#090618',
         '#c34043',
