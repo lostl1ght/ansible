@@ -24,6 +24,6 @@ if [[ -z "$VIRTUAL_ENV" ]]; then
     fi
 fi
 
-ansible-playbook "$1-playbook.yml" -i "local.yml" -i "remote.yml" -e "@secrets.yml"
+ansible-playbook "playbooks/$1.yml" -i "hosts/local.yml" -i "hosts/remote.yml" -e "@secrets.yml"
 
 deactivate

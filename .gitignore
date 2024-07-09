@@ -1,5 +1,5 @@
-secrets.yml
+/secrets.yml
 debug.yml
 *.zwc
 .venv/
-/remote.yml
+/hosts/remote.yml
