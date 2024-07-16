@@ -1,0 +1,11 @@
+#!/bin/env bash
+
+run() {
+    "/mnt/c/Program Files/Mozilla Firefox/firefox.exe" "$1" 1>/dev/null 2>/dev/null
+}
+
+if [[ -e "$1" ]]; then
+    run "file://///wsl.localhost/Debian$(readlink -f $1)"
+else
+    run $1
+fi
