@@ -93,7 +93,7 @@
 - name: get fzf
   become: true
   ansible.builtin.unarchive:
-    src: https://github.com/junegunn/fzf/releases/latest/download/fzf-{{ repo.json.tag_name }}-linux_amd64.tar.gz
+    src: https://github.com/junegunn/fzf/releases/latest/download/fzf-{{ repo.json.tag_name | replace("v", "") }}-linux_amd64.tar.gz
     dest: /usr/local/bin
     creates: /usr/local/bin/fzf
     remote_src: true
