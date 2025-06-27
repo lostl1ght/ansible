@@ -32,20 +32,20 @@
 
 - name: configure tmux
   ansible.builtin.shell: cd /tmp/tmux-{{ repo.json.tag_name }} && ./configure
-  when: not tmux_stat.stat.exists
+  when: ( not tmux_stat.stat.exists ) and ( ansible_os_family == "Debian" )
 
 - name: build tmux
   ansible.builtin.shell: make -C /tmp/tmux-{{ repo.json.tag_name }} -j$(nproc)
-  when: not tmux_stat.stat.exists
+  when: ( not tmux_stat.stat.exists ) and ( ansible_os_family == "Debian" )
 
 - name: install tmux
   become: true
   ansible.builtin.shell: make  -C /tmp/tmux-{{ repo.json.tag_name }} install
-  when: not tmux_stat.stat.exists
+  when: ( not tmux_stat.stat.exists ) and ( ansible_os_family == "Debian" )
 
 - name: clean tmux
   ansible.builtin.shell: rm -rf /tmp/tmux-{{ repo.json.tag_name }}
-  when: not tmux_stat.stat.exists
+  when: ( not tmux_stat.stat.exists ) and ( ansible_os_family == "Debian" )
 
 - name: ensure ~/.config exists
   ansible.builtin.file:
