@@ -45,3 +45,15 @@
     src: '{{ playbook_dir }}/roles/shell/files/lazygit'
     path: ~/.config/lazygit
     state: link
+
+- name: link ghostty config (local)
+  ansible.builtin.file:
+    src: '{{ playbook_dir }}/roles/shell/files/ghostty'
+    path: ~/.config/ghostty
+    state: link
+
+- name: link alacritty config (local)
+  ansible.builtin.file:
+    src: '{{ playbook_dir }}/roles/shell/files/alacritty.toml'
+    path: ~/.config/alacritty.toml
+    state: link
