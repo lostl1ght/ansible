@@ -43,7 +43,7 @@ fi
 
 SECRETS="secrets.yml"
 if [[ ! -e "$SECRETS" ]]; then
-    echo 'Setup secrets'
+    echo 'ERROR: secrets not configured'
     exit 1
 fi
 
