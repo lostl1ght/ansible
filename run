@@ -16,6 +16,9 @@ case "$1" in
         ;;
 esac
 
+git submodule init
+git submodule update
+
 VENV=${VENV:-.venv}
 
 if [[ ! -d $VENV ]]; then
