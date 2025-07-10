@@ -38,7 +38,7 @@ fi
 
 REMOTE="hosts/remote.yml"
 if [[ ! -e "$REMOTE" ]]; then
-    cp "hosts/default_remote.yml" "$REMOTE"
+    cp "templates/default_remote.yml" "$REMOTE"
 fi
 
 SECRETS="secrets.yml"
