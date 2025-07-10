@@ -29,3 +29,25 @@
     sysctl_file: /etc/sysctl.d/ip_default_ttl.conf
     state: present
   when: not ansible_facts.virtualization_type == "wsl"
+
+- name: set sudo PATH
+  become: true
+  ansible.builtin.copy:
+    src: sudo/path
+    dest: /etc/sudoers.d/path
+    owner: root
+    group: root
+    mode: '0640'
+    validate: 'bash -c "cat /etc/sudoers.d/path %s | visudo -cf -"'
+  when: ansible_os_family == "Suse"
+
+- name: preserve some variables
+  become: true
+  ansible.builtin.copy:
+    src: sudo/env
+    dest: /etc/sudoers.d/env
+    owner: root
+    group: root
+    mode: '0640'
+    validate: 'bash -c "cat /etc/sudoers.d/env %s | visudo -cf -"'
+  when: ansible_os_family == "Suse"
