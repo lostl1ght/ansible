@@ -1,0 +1,46 @@
+- name: stat tmux
+  ansible.builtin.stat:
+    path: /usr/local/bin/tmux
+  register: tmux_stat
+
+- name: tmux version
+  ansible.builtin.uri:
+    url: https://api.github.com/repos/tmux/tmux/releases/latest
+  register: repo
+  when: not tmux_stat.stat.exists
+
+- name: get tmux
+  ansible.builtin.unarchive:
+    src: https://github.com/tmux/tmux/releases/latest/download/tmux-{{ repo.json.tag_name }}.tar.gz
+    dest: /tmp
+    remote_src: true
+  when: not tmux_stat.stat.exists
+
+- name: install libevent & ncurses
+  become: true
+  ansible.builtin.apt:
+    pkg:
+      - libevent-dev
+      - libncurses-dev
+      - build-essential
+      - bison
+      - pkg-config
+    state: present
+  when: not tmux_stat.stat.exists
+
+- name: configure tmux
+  ansible.builtin.shell: cd /tmp/tmux-{{ repo.json.tag_name }} && ./configure
+  when: not tmux_stat.stat.exists
+
+- name: build tmux
+  ansible.builtin.shell: make -C /tmp/tmux-{{ repo.json.tag_name }} -j$(nproc)
+  when: not tmux_stat.stat.exists
+
+- name: install tmux
+  become: true
+  ansible.builtin.shell: make  -C /tmp/tmux-{{ repo.json.tag_name }} install
+  when: not tmux_stat.stat.exists
+
+- name: clean tmux
+  ansible.builtin.shell: rm -rf /tmp/tmux-{{ repo.json.tag_name }}
+  when: not tmux_stat.stat.exists
