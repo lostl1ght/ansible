@@ -23,5 +23,9 @@
 
 - name: set ttl
   become: true
-  ansible.builtin.shell: echo 'net.ipv4.ip_default_ttl=65' | tee /etc/sysctl.d/ip_default_ttl.conf
+  ansible.posix.sysctl:
+    name: net.ipv4.ip_default_ttl
+    value: '65'
+    sysctl_file: /etc/sysctl.d/ip_default_ttl.conf
+    state: present
   when: not ansible_facts.virtualization_type == "wsl"
