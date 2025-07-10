@@ -1,0 +1,76 @@
+- name: install zsh
+  become: true
+  community.general.zypper:
+    name: zsh
+    state: present
+    disable_recommends: false
+
+- name: install starship
+  become: true
+  community.general.zypper:
+    name: starship
+    state: present
+    disable_recommends: false
+
+- name: install eza
+  become: true
+  community.general.zypper:
+    name: eza
+    state: present
+    disable_recommends: false
+
+- name: install bat
+  become: true
+  community.general.zypper:
+    name: bat
+    state: present
+    disable_recommends: false
+
+- name: install zoxide
+  become: true
+  community.general.zypper:
+    name: zoxide
+    state: present
+    disable_recommends: false
+
+- name: install fzf
+  become: true
+  community.general.zypper:
+    name: fzf
+    state: present
+    disable_recommends: false
+
+- name: install lazygit
+  become: true
+  community.general.zypper:
+    name: lazygit
+    state: present
+    disable_recommends: false
+
+- name: install delta
+  become: true
+  community.general.zypper:
+    name: git-delta
+    state: present
+    disable_recommends: false
+
+- name: install ripgrep
+  become: true
+  community.general.zypper:
+    name: ripgrep
+    state: present
+    disable_recommends: false
+
+- name: install fd
+  become: true
+  community.general.zypper:
+    name: fd
+    state: present
+    disable_recommends: false
+
+- name: install btop
+  become: true
+  community.general.zypper:
+    name: btop
+    state: present
+    disable_recommends: false
