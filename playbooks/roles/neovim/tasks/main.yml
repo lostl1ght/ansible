@@ -1,3 +1,19 @@
+- name: get neovim
+  become: true
+  ansible.builtin.unarchive:
+    src: https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+    dest: /opt
+    remote_src: true
+    owner: root
+    group: root
+
+- name: put neovim in PATH
+  become: true
+  ansible.builtin.file:
+    src: /opt/nvim-linux-x86_64/bin/nvim
+    path: /usr/local/bin/nvim
+    state: link
+
 - name: sync config (remote)
   ansible.posix.synchronize:
     src: nvim
