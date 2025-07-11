@@ -38,8 +38,7 @@
     owner: root
     group: root
     mode: '0640'
-    validate: 'bash -c "cat /etc/sudoers.d/path %s | visudo -cf -"'
-  when: ansible_os_family == "Suse"
+    validate: 'visudo -cf /etc/sudoers.d/path'
 
 - name: preserve some variables
   become: true
@@ -49,5 +48,4 @@
     owner: root
     group: root
     mode: '0640'
-    validate: 'bash -c "cat /etc/sudoers.d/env %s | visudo -cf -"'
-  when: ansible_os_family == "Suse"
+    validate: 'visudo -cf /etc/sudoers.d/env'
