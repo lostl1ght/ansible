@@ -38,7 +38,7 @@
     owner: root
     group: root
     mode: '0640'
-    validate: 'visudo -cf /etc/sudoers.d/path'
+    validate: 'visudo -cf %s'
 
 - name: preserve some variables
   become: true
@@ -48,4 +48,4 @@
     owner: root
     group: root
     mode: '0640'
-    validate: 'visudo -cf /etc/sudoers.d/env'
+    validate: 'visudo -cf %s'
