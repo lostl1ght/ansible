@@ -18,8 +18,7 @@ case "$1" in
         ;;
 esac
 
-git submodule init
-git submodule update
+git submodule update --init --recursive
 
 VENV=${VENV:-.venv}
 if [[ ! -d "$VENV" ]]; then
