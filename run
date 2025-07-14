@@ -18,6 +18,17 @@ case "$1" in
         ;;
 esac
 
+REMOTE="hosts/remote.yml"
+if [[ ! -e "$REMOTE" ]]; then
+    cp "templates/remote_default.yml" "$REMOTE"
+fi
+
+SECRETS="secrets.yml"
+if [[ ! -e "$SECRETS" ]]; then
+    echo 'ERROR: secrets not configured'
+    exit 1
+fi
+
 git submodule update --init --recursive
 
 VENV=${VENV:-.venv}
@@ -33,17 +44,6 @@ if [[ -z "$VIRTUAL_ENV" ]]; then
         echo "Install a virtual env into '$VENV' folder"
         exit 1
     fi
-fi
-
-REMOTE="hosts/remote.yml"
-if [[ ! -e "$REMOTE" ]]; then
-    cp "templates/remote_default.yml" "$REMOTE"
-fi
-
-SECRETS="secrets.yml"
-if [[ ! -e "$SECRETS" ]]; then
-    echo 'ERROR: secrets not configured'
-    exit 1
 fi
 
 ansible-playbook "playbooks/$1.yml" -i "hosts/local.yml" -i "$REMOTE" -e "@$SECRETS"
