@@ -18,15 +18,15 @@ case "$1" in
         ;;
 esac
 
-REMOTE="hosts/remote.yml"
-if [[ ! -e "$REMOTE" ]]; then
-    cp "templates/remote_default.yml" "$REMOTE"
-fi
-
 SECRETS="secrets.yml"
 if [[ ! -e "$SECRETS" ]]; then
     echo 'ERROR: secrets not configured'
     exit 1
+fi
+
+REMOTE="hosts/remote.yml"
+if [[ ! -e "$REMOTE" ]]; then
+    cp "templates/remote_default.yml" "$REMOTE"
 fi
 
 git submodule update --init --recursive
