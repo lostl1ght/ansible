@@ -18,34 +18,35 @@ case "$1" in
         ;;
 esac
 
-SECRETS="secrets.yml"
+SECRETS='secrets.yml'
 if [[ ! -e "$SECRETS" ]]; then
     echo 'ERROR: secrets not configured'
     exit 1
 fi
 
-REMOTE="hosts/remote.yml"
+REMOTE='hosts/remote.yml'
 if [[ ! -e "$REMOTE" ]]; then
-    cp "templates/remote_default.yml" "$REMOTE"
+    echo 'WARNING: remote not found, using default'
+    cp 'templates/remote_default.yml' "$REMOTE"
 fi
 
 git submodule update --init --recursive
 
-VENV=${VENV:-.venv}
+VENV="$(readlink -f ${VENV:-.venv})"
 if [[ ! -d "$VENV" ]]; then
-    python3 -m venv $VENV
-    source "$VENV/bin/activate" >/dev/null 2>/dev/null
+    python3 -m venv "$VENV"
+    source "$VENV/bin/activate"
     pip install ansible
 fi
 
 if [[ -z "$VIRTUAL_ENV" ]]; then
-    source "$VENV/bin/activate" >/dev/null 2>/dev/null
+    source "$VENV/bin/activate"
     if [[ $? -ne 0 ]]; then
         echo "Install a virtual env into '$VENV' folder"
         exit 1
     fi
 fi
 
-ansible-playbook "playbooks/$1.yml" -i "hosts/local.yml" -i "$REMOTE" -e "@$SECRETS"
+ansible-playbook "playbooks/$1.yml" -i 'hosts/local.yml' -i "$REMOTE" -e "@$SECRETS"
 
 deactivate
