@@ -29,3 +29,8 @@
     path: ~/.config/nvim
     state: link
   when: inventory_hostname in groups["local"]
+
+- name: bootstrap neovim
+  ansible.builtin.shell:
+    cmd: ./bootstrap
+    chdir: ~/.config/nvim
