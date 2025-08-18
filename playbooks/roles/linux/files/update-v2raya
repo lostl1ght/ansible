@@ -1,0 +1,38 @@
+#!/bin/env bash
+
+set -e
+
+if [[ "$EUID" -ne 0 ]]; then
+    echo -e "\x1b[31mERROR:\x1b[0m Root privileges are required to run this command."
+    exit 1
+fi
+
+echo -e "\x1b[34mINFO:\x1b[0m Downloading geoip.dat and geosite.dat."
+wget https://raw.githubusercontent.com/runetfreedom/russia-v2ray-rules-dat/release/geoip.dat -O /usr/local/share/xray/geoip.dat
+wget https://raw.githubusercontent.com/runetfreedom/russia-v2ray-rules-dat/release/geosite.dat -O /usr/local/share/xray/geosite.dat
+
+echo -e "\x1b[34mINFO:\x1b[0m Checking v2rayA version."
+NEW_VERSION="$(curl https://api.github.com/repos/v2rayA/v2rayA/releases/latest | jq -r '.tag_name' | sed 's/^v//')"
+VERSION="$(if command -v v2raya >/dev/null 2>&1; then v2raya --version; else echo "0"; fi)"
+if [[ "$(printf '%s\n' "$VERSION" "$NEW_VERSION" | sort -V | tail -n1)" != "$VERSION" ]]; then
+    echo -e "\x1b[34mINFO:\x1b[0m Updating v2rayA."
+    OUT="/root/v2raya_redhat_x64_$NEW_VERSION.rpm"
+    wget https://github.com/v2rayA/v2rayA/releases/latest/download/installer_redhat_x64_$NEW_VERSION.rpm -O $OUT
+    zypper in --allow-unsigned-rpm -y "$OUT"
+    rm "$OUT"
+else
+    echo -e "\x1b[34mINFO:\x1b[0m No new version. The current version of v2rayA is v$VERSION."
+fi
+
+echo -e "\x1b[34mINFO:\x1b[0m Updating xray."
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u root
+
+echo -e "\x1b[34mINFO:\x1b[0m Stopping Xray."
+systemctl disable xray
+systemctl stop xray
+
+echo -e "\x1b[34mINFO:\x1b[0m Restaring v2rayA."
+systemctl enable v2raya
+systemctl restart v2raya
+
+echo -e "\x1b[34mINFO:\x1b[0m Done."
