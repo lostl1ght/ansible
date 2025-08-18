@@ -1,0 +1,38 @@
+#!/bin/env bash
+
+set -e
+
+if [[ "$EUID" -ne 0 ]]; then
+    echo "ERROR: Root privileges are required to run this command."
+    exit 1
+fi
+
+echo "INFO: Downloading geoip.dat and geosite.dat."
+wget https://raw.githubusercontent.com/runetfreedom/russia-v2ray-rules-dat/release/geoip.dat -O /usr/local/share/xray/geoip.dat
+wget https://raw.githubusercontent.com/runetfreedom/russia-v2ray-rules-dat/release/geosite.dat -O /usr/local/share/xray/geosite.dat
+
+echo "INFO: Checking v2rayA version."
+NEW_VERSION="$(curl https://api.github.com/repos/v2rayA/v2rayA/releases/latest | jq -r '.tag_name' | tr -d 'v')"
+VERSION="$(if command -v v2raya >/dev/null 2>&1; then v2raya --version; else echo "0"; fi)"
+if [[ "$(printf '%s\n' "$VERSION" "$NEW_VERSION" | sort -V | tail -n1)" != "$VERSION" ]]; then
+    echo "INFO: Updating v2rayA."
+    OUT="/root/v2raya_redhat_x64_$NEW_VERSION.rpm"
+    wget https://github.com/v2rayA/v2rayA/releases/latest/download/installer_redhat_x64_$NEW_VERSION.rpm -O $OUT
+    zypper in --allow-unsigned-rpm -y "$OUT"
+    rm "$OUT"
+else
+    echo "INFO: No new version. The current version of v2rayA is v$VERSION."
+fi
+
+echo "INFO: Updating xray."
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u root
+
+echo "INFO: Stopping Xray."
+systemctl disable xray
+systemctl stop xray
+
+echo "INFO: Restaring v2rayA."
+systemctl enable v2raya
+systemctl restart v2raya
+
+echo "INFO: Done."
