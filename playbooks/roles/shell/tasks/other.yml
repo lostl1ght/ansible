@@ -152,7 +152,7 @@
 - name: get btop
   become: true
   ansible.builtin.unarchive:
-    src: https://github.com/aristocratos/btop/releases/latest/download/btop-x86_64-linux-musl.tbz
+    src: https://github.com/aristocratos/btop/releases/latest/download/btop-x86_64-unknown-linux-musl.tbz
     dest: /usr/local/bin
     creates: /usr/local/bin/btop
     extra_opts:
