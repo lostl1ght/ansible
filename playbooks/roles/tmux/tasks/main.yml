@@ -1,14 +1,6 @@
 - name: install tmux
   import_tasks: debian.yml
-  when: ansible_os_family == "Debian"
-
-- name: install tmux
-  become: true
-  community.general.zypper:
-    name: tmux
-    state: present
-    disable_recommends: false
-  when: ansible_os_family == "Suse"
+  when: ansible_facts["os_family"] == "Debian"
 
 - name: ensure ~/.config exists
   ansible.builtin.file:

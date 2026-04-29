@@ -1,17 +1,13 @@
 - name: install Debian packages
   import_tasks: debian.yml
-  when: ansible_os_family == "Debian"
-
-- name: install SUSE packages
-  import_tasks: suse.yml
-  when: ansible_os_family == "Suse"
+  when: ansible_facts["os_family"] == "Debian"
 
 - name: install other packages
   import_tasks: other.yml
   vars:
     families:
       - "Debian"
-  when: ansible_os_family in families
+  when: ansible_facts["os_family"] in families
 
 - name: ensure ~/.config exists
   ansible.builtin.file:
